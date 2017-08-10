@@ -160,7 +160,245 @@ int example6() {
     return 0;
 }
 
+int example7() {
+    namedWindow("disk", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat disk = Mat::zeros(200, 200, CV_32F);
+
+    int xc = 100;
+    int yc = 100;
+    int radius = 20;
+
+    createTrackbar("xc", "disk", &xc, disk.cols, 0);
+    createTrackbar("yc", "disk", &yc, disk.rows, 0);
+    createTrackbar("radius", "disk", &radius, disk.cols, 0);
+
+    for(;;) {
+        disk = Mat::zeros(200, 200, CV_32F);
+
+        for (int x = 0; x < disk.cols; ++x) {
+            for (int y = 0; y < disk.rows; ++y) {
+                if ((x-xc) * (x-xc) + (y-yc) * (y-yc) <= radius * radius)
+                    disk.at<float>(x, y) = 1.0;
+            }
+        }
+
+        imshow("disk", e->scaleImage2_uchar(disk));
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+Mat createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius) {
+    Mat disk = Mat::zeros(rows, cols, CV_32F);
+
+    for (int x = 0; x < disk.cols; ++x) {
+        for (int y = 0; y < disk.rows; ++y) {
+            float d = pow((x-cx) * (x-cx) + (y-cy) * (y-cy), 0.5);
+            if (d <= radius)
+            {
+                //disk.at<float>(x, y) = 1.0;
+                disk.at<float>(x, y) = 1 - d / radius;
+            }
+        }
+    }
+
+    return disk;
+}
+
+int example8() {
+    namedWindow("disk", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat disk = Mat::zeros(200, 200, CV_32F);
+
+    int xc = 100;
+    int yc = 100;
+    int radius = 20;
+
+    createTrackbar("xc", "disk", &xc, disk.cols, 0);
+    createTrackbar("yc", "disk", &yc, disk.rows, 0);
+    createTrackbar("radius", "disk", &radius, disk.cols, 0);
+
+    for(;;) {
+        disk = createWhiteDisk(200, 200, xc, yc, radius);
+
+        imshow("disk", e->scaleImage2_uchar(disk));
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example9() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+    namedWindow("planes_0", WINDOW_KEEPRATIO);
+    namedWindow("planes_1", WINDOW_KEEPRATIO);
+    namedWindow("mask", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat img = imread("img/lena.png", IMREAD_GRAYSCALE);
+    Mat img2 = img.clone();
+
+    int radius = 50;
+
+    createTrackbar("radius", "mask", &radius, img2.cols, 0, 0);
+
+    for(;;) {
+        Mat mask = createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
+        mask = fftshift(mask);
+
+        Mat planes[] =  {Mat_<float>(img), Mat::zeros(img.size(), CV_32F)};
+
+        merge(planes, 2, img2);
+        dft(img2, img2);
+        split(img2, planes);
+
+        multiply(planes[0], mask, planes[0]);
+        multiply(planes[1], mask, planes[1]);
+        merge(planes, 2, img2);
+        idft(img2, img2, DFT_REAL_OUTPUT);
+        img2 = fftshift(img2);
+
+        imshow("img", e->scaleImage2_uchar(img));
+        imshow("planes_0", planes[0]);
+        imshow("planes_1", planes[1]);
+        imshow("img2", fftshift(e->scaleImage2_uchar(img2)));
+        imshow("mask", mask);
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example10() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+    namedWindow("planes_0", WINDOW_KEEPRATIO);
+    namedWindow("planes_1", WINDOW_KEEPRATIO);
+    namedWindow("mask", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat img = imread("img/lena.png", IMREAD_GRAYSCALE);
+    Mat img2 = img.clone();
+
+    int radius = 50;
+
+    createTrackbar("radius", "mask", &radius, img2.cols, 0, 0);
+
+    for(;;) {
+        Mat mask = createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
+        mask = fftshift(mask);
+        mask = 1 - mask;
+
+        Mat planes[] =  {Mat_<float>(img), Mat::zeros(img.size(), CV_32F)};
+
+        merge(planes, 2, img2);
+        dft(img2, img2);
+        split(img2, planes);
+
+        multiply(planes[0], mask, planes[0]);
+        multiply(planes[1], mask, planes[1]);
+        merge(planes, 2, img2);
+        idft(img2, img2, DFT_REAL_OUTPUT);
+        img2 = fftshift(img2);
+
+        imshow("img", e->scaleImage2_uchar(img));
+        imshow("planes_0", planes[0]);
+        imshow("planes_1", planes[1]);
+        imshow("img2", fftshift(e->scaleImage2_uchar(img2)));
+        imshow("mask", mask);
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+Mat createCosineImg(const int &rows, const int cols, const float &freq, const float &theta) {
+    Mat img = Mat::zeros(rows, cols, CV_32F);
+    float rho;
+
+    for (int x = 0; x < img.cols; x++)
+    {
+        for (int y = 0; y < img.rows; y++) {
+            rho = x * cos(theta) - y*sin(theta);
+            img.at<float>(y, x) = cos(2*CV_PI*freq*rho);
+        }
+    }
+
+    return img;
+}
+
+int example11() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat img;
+    int rows = 500;
+    int cols = 500;
+    int freq = 1;
+    int theta = 2;
+
+    createTrackbar("Freq", "img", &freq, 100, 0, 0);
+    createTrackbar("Theta", "img", &theta, 100, 0, 0);
+
+    for(;;) {
+        img = createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
+        imshow("img", e->scaleImage2_uchar(img));
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example12() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("mag", WINDOW_KEEPRATIO);
+
+    Examples *e = new Examples();
+    Mat img = imread("img/lena.png", IMREAD_GRAYSCALE);
+    img.convertTo(img, CV_32F);
+    img = img / 255.0;
+    Mat noise;
+
+    int rows = img.rows;
+    int cols = img.cols;
+
+    int freq = 1;
+    int theta = 2;
+    int gain = 1;
+
+    createTrackbar("Freq", "img", &freq, 500, 0, 0);
+    createTrackbar("Theta", "img", &theta, 100, 0, 0);
+    createTrackbar("Gain", "img", &gain, 100, 0, 0);
+
+    for(;;) {
+        noise = createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
+
+        noise = img + (float)(gain/100.0) * noise;
+
+        Mat img3 = noise.clone();
+        Mat img2, mag;
+        Mat planes[] =  {Mat_<float>(img3), Mat::zeros(img3.size(), CV_32F)};
+        merge(planes, 2, img2);
+        dft(img2, img2);
+        split(img2, planes);
+        magnitude(planes[0], planes[1], mag);
+        mag += 1;
+        log(mag, mag);
+
+        imshow("img", e->scaleImage2_uchar(noise));
+        imshow("mag", fftshift(e->scaleImage2_uchar(mag)));
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
-    return example6();
+    return example12();
 }

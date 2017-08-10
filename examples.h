@@ -42,6 +42,7 @@ public:
     int medianBlurFilter();
     int fourBlurTypes();
     int sobelFilter();
+    int easySobelFilter();
 
     Mat scaleImage2_uchar(Mat &src);
     Mat computeHistogram1C (const Mat &src);

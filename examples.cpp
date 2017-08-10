@@ -744,3 +744,29 @@ int Examples::fourBlurTypes() {
 
     return 0;
 }
+
+int Examples::easySobelFilter() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("gx", WINDOW_KEEPRATIO);
+    namedWindow("gy", WINDOW_KEEPRATIO);
+    namedWindow("g", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/lena.png", IMREAD_GRAYSCALE);
+    Mat gx, gy, g;
+    spatialGradient(img, gx, gy, 3, BORDER_DEFAULT);
+    g = abs(gx) + abs(gy);
+    gx = this->scaleImage2_uchar(gx);
+    gy = this->scaleImage2_uchar(gy);
+    g  = this->scaleImage2_uchar(g);
+
+    for (;;) {
+        imshow("img", img);
+        imshow("gx", gx);
+        imshow("gy", gy);
+        imshow("g", g);
+
+        if ((char)waitKey(1)=='q') break;
+    }
+
+    return 0;
+}

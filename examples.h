@@ -43,7 +43,22 @@ public:
     int fourBlurTypes();
     int sobelFilter();
     int easySobelFilter();
+    int easySobelFilter2();
+    int laplacianFilter();
+    int easyLaplacianFilter();
+    int dft();
+    int dftMagnitude();
+    int whiteDisk();
+    int easyWhiteDisk();
+    int lowPassFilterDFT();
+    int highPassFilterDFT();
+    int cosineImage();
+    int cosineNoise();
 
+
+    Mat createCosineImg(const int &rows, const int cols, const float &freq, const float &theta);
+    Mat createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius);
+    Mat fftshift(const Mat &src);
     Mat scaleImage2_uchar(Mat &src);
     Mat computeHistogram1C (const Mat &src);
     Mat computeHistogram3C (const Mat &src);

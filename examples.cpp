@@ -771,7 +771,7 @@ int Examples::easySobelFilter() {
     return 0;
 }
 
-Mat Examples::this->createCosineImg(const int &rows, const int cols, const float &freq, const float &theta) {
+Mat Examples::createCosineImg(const int &rows, const int cols, const float &freq, const float &theta) {
     Mat img = Mat::zeros(rows, cols, CV_32F);
     float rho;
 
@@ -786,7 +786,7 @@ Mat Examples::this->createCosineImg(const int &rows, const int cols, const float
     return img;
 }
 
-Mat Examples::this->createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius) {
+Mat Examples::createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius) {
     Mat disk = Mat::zeros(rows, cols, CV_32F);
 
     for (int x = 0; x < disk.cols; ++x) {
@@ -803,7 +803,7 @@ Mat Examples::this->createWhiteDisk(const int &rows, const int &cols, const int 
     return disk;
 }
 
-Mat Examples::this->fftshift(const Mat &src) {
+Mat Examples::fftshift(const Mat &src) {
     Mat tmp = src.clone();
     Mat tmp2;
 
@@ -906,7 +906,7 @@ int Examples::easyLaplacianFilter() {
 
 
 
-int Examples::dft() {
+int Examples::dftMethod() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("planes_0", WINDOW_KEEPRATIO);
     namedWindow("planes_1", WINDOW_KEEPRATIO);

@@ -46,7 +46,7 @@ public:
     int easySobelFilter2();
     int laplacianFilter();
     int easyLaplacianFilter();
-    int dft();
+    int dftMethod();
     int dftMagnitude();
     int whiteDisk();
     int easyWhiteDisk();

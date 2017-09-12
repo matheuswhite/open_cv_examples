@@ -226,7 +226,76 @@ int example8() {
     return 0;
 }
 
+int example9() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+    int wsize = 1;
+
+    createTrackbar("wsize", "img2", &wsize, 50, 0, 0);
+
+    for (;;) {
+        blur(img, img2, Size(wsize + 1, wsize + 1), Point(-1, -1), BORDER_DEFAULT);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example10() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+    int wsize = 1;
+
+    createTrackbar("wsize", "img2", &wsize, 10, 0, 0);
+
+    for (;;) {
+        Laplacian(img, img2, CV_16S, 2*wsize+1, 1, 0, BORDER_DEFAULT);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example11() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+
+    int sp = 10;
+    int sr = 100;
+    int maxLevel = 1;
+    TermCriteria criteria = TermCriteria(TermCriteria::MAX_ITER + TermCriteria::EPS, 5, 1);
+
+    createTrackbar("maxLevel", "img2", &maxLevel, 5, 0, 0);
+    createTrackbar("sr", "img2", &sr, 200, 0, 0);
+    createTrackbar("sp", "img2", &sp, 20, 0, 0);
+
+    for (;;) {
+        pyrMeanShiftFiltering(img, img2, sp, sr, maxLevel, criteria);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
-    return example8();
+    return example11();
 }

@@ -295,7 +295,80 @@ int example11() {
     return 0;
 }
 
+int example12() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+    namedWindow("img3", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/calculator.tif", IMREAD_GRAYSCALE);
+    Mat img2, img3;
+    int size = 0, size2 = 0;
+
+    createTrackbar("size", "img2", &size, 30);
+    createTrackbar("size2", "img3", &size2, 21);
+
+    Mat element, element2;
+
+    for (;;) {
+        element = getStructuringElement(MORPH_RECT, Size( 2*size + 1, 2*size + 1));
+        element2 = getStructuringElement(MORPH_RECT, Size( 2*size2 + 1, 2*size2+1 ));
+
+        morphologyEx(img, img2, MORPH_OPEN, element);
+        morphologyEx(img2, img3, MORPH_TOPHAT, element2);
+
+        imshow("img", img);
+        imshow("img2", img2);
+        imshow("img3", img3);
+
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example13() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/wirebond.tif", IMREAD_GRAYSCALE);
+    Mat img2;
+
+    Laplacian(img, img2, CV_32F, 1, 1, 0);
+    img2 = abs(img2);
+
+    imshow("img", scaleImage2_uchar(img2));
+
+    for (;;) {
+
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int example14() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/building.tif", IMREAD_GRAYSCALE);
+    Mat img2, gx, gy, abs_gx, abs_gy;
+
+    Sobel(img, gx, CV_32F, 1, 0, 3);
+    Sobel(img, gy, CV_32F, 0, 1, 3);
+    convertScaleAbs(gx, abs_gx);
+    convertScaleAbs(gy, abs_gy);
+    img2 = abs_gx + abs_gy;
+
+    for (;;) {
+        imshow("img", scaleImage2_uchar(img));
+        imshow("gx", scaleImage2_uchar(abs_gx));
+        imshow("gy", scaleImage2_uchar(abs_gy));
+        imshow("img2", scaleImage2_uchar(img2));
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
-    return example11();
+    return example14();
 }

@@ -1,11 +1,6 @@
-#include "examples.h"
+#include "utils.h"
 
-Examples::Examples()
-{
-
-}
-
-int Examples::useWebcam() {
+int useWebcam() {
     namedWindow("img", WINDOW_KEEPRATIO);
 
     Mat img;
@@ -25,7 +20,7 @@ int Examples::useWebcam() {
     return 0;
 }
 
-int Examples::splitImage() {
+int splitImage() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("b", WINDOW_KEEPRATIO);
     namedWindow("g", WINDOW_KEEPRATIO);
@@ -46,7 +41,7 @@ int Examples::splitImage() {
     return 0;
 }
 
-int Examples::useThreshold() {
+int useThreshold() {
     namedWindow("bin", WINDOW_KEEPRATIO);
     namedWindow("gray", WINDOW_KEEPRATIO);
 
@@ -71,7 +66,7 @@ int Examples::useThreshold() {
     return 0;
 }
 
-int Examples::useGaussianNoise() {
+int useGaussianNoise(Utils *utils) {
     namedWindow("noise", WINDOW_KEEPRATIO);
     namedWindow("noise-hist", WINDOW_KEEPRATIO);
     namedWindow("img", WINDOW_KEEPRATIO);
@@ -82,7 +77,7 @@ int Examples::useGaussianNoise() {
     Mat noise_hist;
 
     randn(noise, 50, 3);
-    noise_hist = this->computeHistogram1C(noise);
+    noise_hist = utils->computeHistogram1C(noise);
 
     imshow("img", img);
     img += noise;
@@ -96,7 +91,7 @@ int Examples::useGaussianNoise() {
     return 0;
 }
 
-int Examples::useWhiteNoise() {
+int useWhiteNoise(Utils *utils) {
     namedWindow("noise", WINDOW_KEEPRATIO);
     namedWindow("noise-hist", WINDOW_KEEPRATIO);
     namedWindow("img", WINDOW_KEEPRATIO);
@@ -107,7 +102,7 @@ int Examples::useWhiteNoise() {
     Mat noise_hist;
 
     randu(noise, 0, 255);
-    noise_hist = this->computeHistogram1C(noise);
+    noise_hist = utils->computeHistogram1C(noise);
 
     imshow("img", img);
     img += noise;
@@ -121,7 +116,7 @@ int Examples::useWhiteNoise() {
     return 0;
 }
 
-int Examples::convertColorType() {
+int convertColorType() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -138,7 +133,7 @@ int Examples::convertColorType() {
     return 0;
 }
 
-int Examples::negativeImage() {
+int negativeImage() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -155,7 +150,7 @@ int Examples::negativeImage() {
     return 0;
 }
 
-int Examples::channelSum() {
+int channelSum() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -172,7 +167,7 @@ int Examples::channelSum() {
     return 0;
 }
 
-int Examples::matrixCreation() {
+int matrixCreation() {
     namedWindow("img", WINDOW_KEEPRATIO);
 
     Mat img = 127 + Mat::zeros(30, 30, CV_8U);
@@ -184,7 +179,7 @@ int Examples::matrixCreation() {
     return 0;
 }
 
-int Examples::imagesDiff() {
+int imagesDiff() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("diff", WINDOW_KEEPRATIO);
@@ -205,7 +200,7 @@ int Examples::imagesDiff() {
     return 0;
 }
 
-int Examples::bitwiseOps() {
+int bitwiseOps() {
     namedWindow("utk", WINDOW_KEEPRATIO);
     namedWindow("gt", WINDOW_KEEPRATIO);
     namedWindow("and", WINDOW_KEEPRATIO);
@@ -234,7 +229,7 @@ int Examples::bitwiseOps() {
     return 0;
 }
 
-int Examples::cutImage() {
+int cutImage() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -249,7 +244,7 @@ int Examples::cutImage() {
     return 0;
 }
 
-int Examples::gradient() {
+int gradient() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -272,7 +267,7 @@ int Examples::gradient() {
     return 0;
 }
 
-int Examples::powerTransform() {
+int powerTransform() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -311,7 +306,7 @@ int Examples::powerTransform() {
     return 0;
 }
 
-int Examples::logTransform() {
+int logTransform() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -338,7 +333,7 @@ int Examples::logTransform() {
     return 0;
 }
 
-int Examples::linearRangeTransform() {
+int linearRangeTransform() {
     namedWindow("img", WINDOW_KEEPRATIO);
 
     Mat img = imread("imgkidney.tif", IMREAD_GRAYSCALE);
@@ -351,7 +346,7 @@ int Examples::linearRangeTransform() {
     return 0;
 }
 
-int Examples::bitLayerSplit() {
+int bitLayerSplit() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("img3", WINDOW_KEEPRATIO);
@@ -373,7 +368,7 @@ int Examples::bitLayerSplit() {
     return 0;
 }
 
-int Examples::tresholdTypes() {
+int tresholdTypes() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -395,7 +390,7 @@ int Examples::tresholdTypes() {
     return 0;
 }
 
-int Examples::equalizeHistogram() {
+int equalizeHistogram(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("hist", WINDOW_KEEPRATIO);
@@ -406,8 +401,8 @@ int Examples::equalizeHistogram() {
     Mat hist;
     Mat hist2;
     equalizeHist(img ,img2);
-    hist = computeHistogram1C(img);
-    hist2 = computeHistogram1C(img2);
+    hist = utils->computeHistogram1C(img);
+    hist2 = utils->computeHistogram1C(img2);
     imshow("img", img);
     imshow("img2", img2);
     imshow("hist", hist);
@@ -420,92 +415,9 @@ int Examples::equalizeHistogram() {
     return 0;
 }
 
-Mat Examples::computeHistogram1C (const Mat &src) {
-    /// Establish the number of bins
-    int histSize = 256;
-
-    /// Set the ranges ( for B,G,R) )
-    float range[] = { 0, 256 } ;
-    const float* histRange = { range };
-
-    bool uniform = true; bool accumulate = false;
-
-    Mat b_hist/*, g_hist, r_hist*/;
-
-    /// Compute the histograms:
-    calcHist( &src, 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
 
 
-    // Draw the histograms for B, G and R
-    int hist_w = 512; int hist_h = 400;
-    int bin_w = cvRound( (double) hist_w/histSize );
-
-    Mat histImage( hist_h, hist_w, CV_8UC1, Scalar( 0 ) );
-
-    /// Normalize the result to [ 0, histImage.rows ]
-    normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-
-    /// Draw for each channel
-    for( int i = 1; i < histSize; i++ )
-    {
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
-              Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
-              Scalar( 255 ), 2, 8, 0  );
-    }
-
-    return histImage;
-}
-
-Mat Examples::computeHistogram3C (const Mat &src) {
-    /// Establish the number of bins
-    int histSize = 256;
-
-    /// Set the ranges ( for B,G,R) )
-    float range[] = { 0, 256 } ;
-    const float* histRange = { range };
-
-    bool uniform = true; bool accumulate = false;
-
-    Mat b_hist, g_hist, r_hist;
-    Mat bgr[3];
-    split(src, bgr);
-
-    /// Compute the histograms:
-    calcHist( &bgr[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
-    calcHist( &bgr[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate );
-    calcHist( &bgr[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate );
-
-    // Draw the histograms for B, G and R
-    int hist_w = 512; int hist_h = 400;
-    int bin_w = cvRound( (double) hist_w/histSize );
-
-    Mat histImage( hist_h, hist_w, CV_32FC3, Scalar( 255, 255, 255 ) );
-
-    /// Normalize the result to [ 0, histImage.rows ]
-    normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-    normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-    normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat() );
-
-    /// Draw for each channel
-    for( int i = 1; i < histSize; i++ )
-    {
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1)) ) ,
-              Point( bin_w*(i), hist_h - cvRound(b_hist.at<float>(i)) ),
-              Scalar( 255, 0, 0 ), 2, 8, 0  );
-
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1)) ) ,
-              Point( bin_w*(i), hist_h - cvRound(g_hist.at<float>(i)) ),
-              Scalar( 0, 255, 0 ), 2, 8, 0  );
-
-        line( histImage, Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1)) ) ,
-              Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i)) ),
-              Scalar( 0, 0, 255 ), 2, 8, 0  );
-    }
-
-    return histImage;
-}
-
-int Examples::piecewiseLinearTransform() {
+int piecewiseLinearTransform(Utils *utils) {
 
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
@@ -564,8 +476,8 @@ int Examples::piecewiseLinearTransform() {
         circle( control, Point( x1, 255 - y1 ), 4, Scalar( 0 ), 2, 8, 0 );
         circle( control, Point( x2, 255 - y2 ), 4, Scalar( 0 ), 2, 8, 0 );
 
-        hist = computeHistogram1C(img);
-        hist2 = computeHistogram1C(img2);
+        hist = utils->computeHistogram1C(img);
+        hist2 = utils->computeHistogram1C(img2);
 
         imshow("img", img);
         imshow("img2", img2);
@@ -579,7 +491,7 @@ int Examples::piecewiseLinearTransform() {
     return 0;
 }
 
-int Examples::equalizeHistogramRange() {
+int equalizeHistogramRange() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -603,7 +515,7 @@ int Examples::equalizeHistogramRange() {
     return 0;
 }
 
-int Examples::blurVerticalHorizontal() {
+int blurVerticalHorizontal() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -626,7 +538,7 @@ int Examples::blurVerticalHorizontal() {
     return 0;
 }
 
-int Examples::medianBlurFilter() {
+int medianBlurFilter() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("img3", WINDOW_KEEPRATIO);
@@ -658,17 +570,9 @@ int Examples::medianBlurFilter() {
     return 0;
 }
 
-Mat Examples::scaleImage2_uchar(Mat &src) {
-    Mat tmp = src.clone();
-    if (src.type() != CV_32F)
-        tmp.convertTo(tmp, CV_32F);
-    normalize(tmp, tmp, 1, 0, NORM_MINMAX);
-    tmp = 255 * tmp;
-    tmp.convertTo(tmp, CV_8U, 1, 0);
-    return tmp;
-}
 
-int Examples::sobelFilter() {
+
+int sobelFilter(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("gx", WINDOW_KEEPRATIO);
     namedWindow("gy", WINDOW_KEEPRATIO);
@@ -691,9 +595,9 @@ int Examples::sobelFilter() {
     filter2D(img, gx, CV_32F, kx, Point(-1, -1), 0, BORDER_DEFAULT);
     filter2D(img, gy, CV_32F, ky, Point(-1, -1), 0, BORDER_DEFAULT);
     g = abs(gx) + abs(gy);
-    gx = scaleImage2_uchar(gx);
-    gy = scaleImage2_uchar(gy);
-    g = scaleImage2_uchar(g);
+    gx = utils->scaleImage2_uchar(gx);
+    gy = utils->scaleImage2_uchar(gy);
+    g = utils->scaleImage2_uchar(g);
     for(;;) {
         imshow("img", img);
         imshow("gx", gx);
@@ -705,7 +609,7 @@ int Examples::sobelFilter() {
     return 0;
 }
 
-int Examples::fourBlurTypes() {
+int fourBlurTypes() {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
 
@@ -745,7 +649,7 @@ int Examples::fourBlurTypes() {
     return 0;
 }
 
-int Examples::easySobelFilter() {
+int easySobelFilter(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("gx", WINDOW_KEEPRATIO);
     namedWindow("gy", WINDOW_KEEPRATIO);
@@ -755,9 +659,9 @@ int Examples::easySobelFilter() {
     Mat gx, gy, g;
     spatialGradient(img, gx, gy, 3, BORDER_DEFAULT);
     g = abs(gx) + abs(gy);
-    gx = this->scaleImage2_uchar(gx);
-    gy = this->scaleImage2_uchar(gy);
-    g  = this->scaleImage2_uchar(g);
+    gx = utils->scaleImage2_uchar(gx);
+    gy = utils->scaleImage2_uchar(gy);
+    g  = utils->scaleImage2_uchar(g);
 
     for (;;) {
         imshow("img", img);
@@ -771,64 +675,9 @@ int Examples::easySobelFilter() {
     return 0;
 }
 
-Mat Examples::createCosineImg(const int &rows, const int cols, const float &freq, const float &theta) {
-    Mat img = Mat::zeros(rows, cols, CV_32F);
-    float rho;
 
-    for (int x = 0; x < img.cols; x++)
-    {
-        for (int y = 0; y < img.rows; y++) {
-            rho = x * cos(theta) - y*sin(theta);
-            img.at<float>(y, x) = cos(2*CV_PI*freq*rho);
-        }
-    }
 
-    return img;
-}
-
-Mat Examples::createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius) {
-    Mat disk = Mat::zeros(rows, cols, CV_32F);
-
-    for (int x = 0; x < disk.cols; ++x) {
-        for (int y = 0; y < disk.rows; ++y) {
-            float d = pow((x-cx) * (x-cx) + (y-cy) * (y-cy), 0.5);
-            if (d <= radius)
-            {
-                //disk.at<float>(x, y) = 1.0;
-                disk.at<float>(x, y) = 1 - d / radius;
-            }
-        }
-    }
-
-    return disk;
-}
-
-Mat Examples::fftshift(const Mat &src) {
-    Mat tmp = src.clone();
-    Mat tmp2;
-
-    tmp = tmp(Rect(0, 0, tmp.cols & -2, tmp.rows & -2));
-
-    int cx = tmp.cols/2;
-    int cy = tmp.rows/2;
-
-    Mat q0(tmp, Rect(0, 0, cx, cy));
-    Mat q1(tmp, Rect(cx, 0, cx, cy));
-    Mat q2(tmp, Rect(0, cy, cx, cy));
-    Mat q3(tmp, Rect(cx, cy, cx, cy));
-
-    q1.copyTo(tmp2);
-    q2.copyTo(q1);
-    tmp2.copyTo(q2);
-
-    q0.copyTo(tmp2);
-    q3.copyTo(q0);
-    tmp2.copyTo(q3);
-
-    return tmp;
-}
-
-int Examples::easySobelFilter2() {
+int easySobelFilter2(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("gx", WINDOW_KEEPRATIO);
     namedWindow("gy", WINDOW_KEEPRATIO);
@@ -841,10 +690,10 @@ int Examples::easySobelFilter2() {
     g = abs(gx) + abs(gy);
 
     for (;;) {
-        imshow("img", this->scaleImage2_uchar(img));
-        imshow("gx", this->scaleImage2_uchar(gx));
-        imshow("gy", this->scaleImage2_uchar(gy));
-        imshow("g", this->scaleImage2_uchar(g));
+        imshow("img", utils->scaleImage2_uchar(img));
+        imshow("gx", utils->scaleImage2_uchar(gx));
+        imshow("gy", utils->scaleImage2_uchar(gy));
+        imshow("g", utils->scaleImage2_uchar(g));
 
         if ((char)waitKey(1)=='q') break;
     }
@@ -852,7 +701,7 @@ int Examples::easySobelFilter2() {
     return 0;
 }
 
-int Examples::laplacianFilter() {
+int laplacianFilter(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("img3", WINDOW_KEEPRATIO);
@@ -871,19 +720,19 @@ int Examples::laplacianFilter() {
     createTrackbar("factor", "img3", &factor, 100, 0, 0);
 
     for(;;) {
-        Mat hist = this->computeHistogram1C(img3);
+        Mat hist = utils->computeHistogram1C(img3);
         add(img, -(factor/100.0)*img2, img3, noArray(), CV_8U);
-        imshow("img", this->scaleImage2_uchar(img));
-        imshow("img2", this->scaleImage2_uchar(img2));
-        imshow("img3", this->scaleImage2_uchar(img3));
-        imshow("hist", this->scaleImage2_uchar(hist));
+        imshow("img", utils->scaleImage2_uchar(img));
+        imshow("img2", utils->scaleImage2_uchar(img2));
+        imshow("img3", utils->scaleImage2_uchar(img3));
+        imshow("hist", utils->scaleImage2_uchar(hist));
         if ((char)waitKey(5) == 'q') break;
     }
 
     return 0;
 }
 
-int Examples::easyLaplacianFilter() {
+int easyLaplacianFilter(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("lap", WINDOW_KEEPRATIO);
@@ -897,7 +746,7 @@ int Examples::easyLaplacianFilter() {
     for(;;) {
         imshow("img", img);
         imshow("img2", img2);
-        imshow("lap", this->scaleImage2_uchar(lap));
+        imshow("lap", utils->scaleImage2_uchar(lap));
         if ((char)waitKey(5) == 'q') break;
     }
 
@@ -906,7 +755,7 @@ int Examples::easyLaplacianFilter() {
 
 
 
-int Examples::dftMethod() {
+int dftMethod(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("planes_0", WINDOW_KEEPRATIO);
     namedWindow("planes_1", WINDOW_KEEPRATIO);
@@ -923,16 +772,16 @@ int Examples::dftMethod() {
     normalize(planes[1], planes[1], 1, 0, NORM_MINMAX);
 
     for(;;) {
-        imshow("img", this->scaleImage2_uchar(img));
-        imshow("planes_0", this->fftshift(planes[0]));
-        imshow("planes_1", this->fftshift(planes[1]));
+        imshow("img", utils->scaleImage2_uchar(img));
+        imshow("planes_0", utils->fftshift(planes[0]));
+        imshow("planes_1", utils->fftshift(planes[1]));
         if ((char)waitKey(5) == 'q') break;
     }
 
     return 0;
 }
 
-int Examples::dftMagnitude() {
+int dftMagnitude(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("planes_0", WINDOW_KEEPRATIO);
     namedWindow("planes_1", WINDOW_KEEPRATIO);
@@ -953,17 +802,17 @@ int Examples::dftMagnitude() {
     log(mag, mag);
 
     for(;;) {
-        imshow("img", this->scaleImage2_uchar(img));
-        imshow("planes_0", this->fftshift(planes[0]));
-        imshow("planes_1", this->fftshift(planes[1]));
-        imshow("mag", this->fftshift(this->scaleImage2_uchar(mag)));
+        imshow("img", utils->scaleImage2_uchar(img));
+        imshow("planes_0", utils->fftshift(planes[0]));
+        imshow("planes_1", utils->fftshift(planes[1]));
+        imshow("mag", utils->fftshift(utils->scaleImage2_uchar(mag)));
         if ((char)waitKey(5) == 'q') break;
     }
 
     return 0;
 }
 
-int Examples::whiteDisk() {
+int whiteDisk(Utils *utils) {
     namedWindow("disk", WINDOW_KEEPRATIO);
 
 
@@ -987,7 +836,7 @@ int Examples::whiteDisk() {
             }
         }
 
-        imshow("disk", this->scaleImage2_uchar(disk));
+        imshow("disk", utils->scaleImage2_uchar(disk));
         if ((char)waitKey(5) == 'q') break;
     }
 
@@ -996,7 +845,7 @@ int Examples::whiteDisk() {
 
 
 
-int Examples::easyWhiteDisk() {
+int easyWhiteDisk(Utils *utils) {
     namedWindow("disk", WINDOW_KEEPRATIO);
 
 
@@ -1011,16 +860,16 @@ int Examples::easyWhiteDisk() {
     createTrackbar("radius", "disk", &radius, disk.cols, 0);
 
     for(;;) {
-        disk = this->createWhiteDisk(200, 200, xc, yc, radius);
+        disk = utils->createWhiteDisk(200, 200, xc, yc, radius);
 
-        imshow("disk", this->scaleImage2_uchar(disk));
+        imshow("disk", utils->scaleImage2_uchar(disk));
         if ((char)waitKey(5) == 'q') break;
     }
 
     return 0;
 }
 
-int Examples::lowPassFilterDFT() {
+int lowPassFilterDFT(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("planes_0", WINDOW_KEEPRATIO);
@@ -1036,8 +885,8 @@ int Examples::lowPassFilterDFT() {
     createTrackbar("radius", "mask", &radius, img2.cols, 0, 0);
 
     for(;;) {
-        Mat mask = this->createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
-        mask = this->fftshift(mask);
+        Mat mask = utils->createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
+        mask = utils->fftshift(mask);
 
         Mat planes[] =  {Mat_<float>(img), Mat::zeros(img.size(), CV_32F)};
 
@@ -1049,12 +898,12 @@ int Examples::lowPassFilterDFT() {
         multiply(planes[1], mask, planes[1]);
         merge(planes, 2, img2);
         idft(img2, img2, DFT_REAL_OUTPUT);
-        img2 = this->fftshift(img2);
+        img2 = utils->fftshift(img2);
 
-        imshow("img", this->scaleImage2_uchar(img));
+        imshow("img", utils->scaleImage2_uchar(img));
         imshow("planes_0", planes[0]);
         imshow("planes_1", planes[1]);
-        imshow("img2", this->fftshift(this->scaleImage2_uchar(img2)));
+        imshow("img2", utils->fftshift(utils->scaleImage2_uchar(img2)));
         imshow("mask", mask);
         if ((char)waitKey(5) == 'q') break;
     }
@@ -1062,7 +911,7 @@ int Examples::lowPassFilterDFT() {
     return 0;
 }
 
-int Examples::highPassFilterDFT() {
+int highPassFilterDFT(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("img2", WINDOW_KEEPRATIO);
     namedWindow("planes_0", WINDOW_KEEPRATIO);
@@ -1078,8 +927,8 @@ int Examples::highPassFilterDFT() {
     createTrackbar("radius", "mask", &radius, img2.cols, 0, 0);
 
     for(;;) {
-        Mat mask = this->createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
-        mask = this->fftshift(mask);
+        Mat mask = utils->createWhiteDisk(img2.rows, img2.cols, (int)img2.cols/2, (int)img2.rows/2, radius);
+        mask = utils->fftshift(mask);
         mask = 1 - mask;
 
         Mat planes[] =  {Mat_<float>(img), Mat::zeros(img.size(), CV_32F)};
@@ -1092,12 +941,12 @@ int Examples::highPassFilterDFT() {
         multiply(planes[1], mask, planes[1]);
         merge(planes, 2, img2);
         idft(img2, img2, DFT_REAL_OUTPUT);
-        img2 = this->fftshift(img2);
+        img2 = utils->fftshift(img2);
 
-        imshow("img", this->scaleImage2_uchar(img));
+        imshow("img", utils->scaleImage2_uchar(img));
         imshow("planes_0", planes[0]);
         imshow("planes_1", planes[1]);
-        imshow("img2", this->fftshift(this->scaleImage2_uchar(img2)));
+        imshow("img2", utils->fftshift(utils->scaleImage2_uchar(img2)));
         imshow("mask", mask);
         if ((char)waitKey(5) == 'q') break;
     }
@@ -1105,7 +954,7 @@ int Examples::highPassFilterDFT() {
     return 0;
 }
 
-int Examples::cosineImage() {
+int cosineImage(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
 
 
@@ -1119,15 +968,15 @@ int Examples::cosineImage() {
     createTrackbar("Theta", "img", &theta, 100, 0, 0);
 
     for(;;) {
-        img = this->createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
-        imshow("img", this->scaleImage2_uchar(img));
+        img = utils->createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
+        imshow("img", utils->scaleImage2_uchar(img));
         if ((char)waitKey(5) == 'q') break;
     }
 
     return 0;
 }
 
-int Examples::cosineNoise() {
+int cosineNoise(Utils *utils) {
     namedWindow("img", WINDOW_KEEPRATIO);
     namedWindow("mag", WINDOW_KEEPRATIO);
 
@@ -1149,7 +998,7 @@ int Examples::cosineNoise() {
     createTrackbar("Gain", "img", &gain, 100, 0, 0);
 
     for(;;) {
-        noise = this->createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
+        noise = utils->createCosineImg(rows, cols, (float)freq/1e3, (float)(2*CV_PI*theta/100.0));
 
         noise = img + (float)(gain/100.0) * noise;
 
@@ -1163,9 +1012,312 @@ int Examples::cosineNoise() {
         mag += 1;
         log(mag, mag);
 
-        imshow("img", this->scaleImage2_uchar(noise));
-        imshow("mag", this->fftshift(this->scaleImage2_uchar(mag)));
+        imshow("img", utils->scaleImage2_uchar(noise));
+        imshow("mag", utils->fftshift(utils->scaleImage2_uchar(mag)));
         if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}
+
+int sliptBGRChannelsShowColormap(Utils *utils) {
+
+    namedWindow("baboon", WINDOW_KEEPRATIO);
+    namedWindow("b", WINDOW_KEEPRATIO);
+    namedWindow("g", WINDOW_KEEPRATIO);
+    namedWindow("r", WINDOW_KEEPRATIO);
+
+    Mat baboon = imread("img/baboon.png", IMREAD_COLOR);
+    std::vector<Mat> bgr;
+    split(baboon, bgr);
+
+    imshow("baboon", baboon);
+    imshow("b", utils->cvtImg2Colormap(bgr[0], COLORMAP_JET));
+    imshow("g", utils->cvtImg2Colormap(bgr[1], COLORMAP_JET));
+    imshow("r", utils->cvtImg2Colormap(bgr[2], COLORMAP_JET));
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int sliptBGRChannelsNegative() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("b", WINDOW_KEEPRATIO);
+    namedWindow("g", WINDOW_KEEPRATIO);
+    namedWindow("r", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/rgbcube_kBKG.png", IMREAD_COLOR);
+    std::vector<Mat> bgr;
+    img = Scalar(255, 255, 255) - img;
+    split(img, bgr);
+
+    imshow("img", img);
+    imshow("b", bgr[0]);
+    imshow("g", bgr[1]);
+    imshow("r", bgr[2]);
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int sliptYCrCbChannels() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("y", WINDOW_KEEPRATIO);
+    namedWindow("r", WINDOW_KEEPRATIO);
+    namedWindow("b", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/rgbcube_kBKG.png", IMREAD_COLOR);
+    Mat img2;
+    std::vector<Mat> yrb;
+    cvtColor(img, img2, CV_BGR2YCrCb);
+    split(img2, yrb);
+
+    imshow("img", img);
+    imshow("y", yrb[0]);
+    imshow("r", yrb[1]);
+    imshow("b", yrb[2]);
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int sliptHSVChannels() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("h", WINDOW_KEEPRATIO);
+    namedWindow("s", WINDOW_KEEPRATIO);
+    namedWindow("v", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+    std::vector<Mat> hsv;
+    cvtColor(img, img2, CV_BGR2HSV);
+    split(img2, hsv);
+
+    imshow("img", img);
+    imshow("h", hsv[0]);
+    imshow("s", hsv[1]);
+    imshow("v", hsv[2]);
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int sliptHSVChannelsChips() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("h", WINDOW_KEEPRATIO);
+    namedWindow("s", WINDOW_KEEPRATIO);
+    namedWindow("v", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/chips.png", IMREAD_COLOR);
+    Mat img2;
+    std::vector<Mat> hsv;
+    cvtColor(img, img2, CV_BGR2HSV);
+    split(img2, hsv);
+
+    imshow("img", img);
+    imshow("h", hsv[0]);
+    imshow("s", hsv[1]);
+    imshow("v", hsv[2]);
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int sliptHSVChannelsCube() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("h", WINDOW_KEEPRATIO);
+    namedWindow("s", WINDOW_KEEPRATIO);
+    namedWindow("v", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/rgbcube_kBKG.png", IMREAD_COLOR);
+    Mat img2;
+    std::vector<Mat> hsv;
+    cvtColor(img, img2, CV_BGR2HSV);
+    split(img2, hsv);
+
+    imshow("img", img);
+    imshow("h", hsv[0]);
+    imshow("s", hsv[1]);
+    imshow("v", hsv[2]);
+
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int RGBdisks(Utils *utils) {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    int rows = 1e3;
+    int radius = (int)(rows/4);
+    int bx = (int)(rows/2), by = (int)(rows/2) - (int)(radius/2);
+    int gx =(int)(rows/2) - radius/2;
+    int gy =(int)(rows/2) + radius/2;
+    int rx =(int)(rows/2) + radius/2;
+    int ry =(int)(rows/2) + radius/2;
+    Mat img;
+    std::vector<Mat> bgr;
+    bgr.push_back(utils->createWhiteDisk(rows, rows, bx, by, radius));
+    bgr.push_back(utils->createWhiteDisk(rows, rows, gx, gy, radius));
+    bgr.push_back(utils->createWhiteDisk(rows, rows, rx, ry, radius));
+    merge(bgr, img);
+    img = utils->scaleImage2_uchar(img);
+    imshow("img", img);
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int RGBdisksNegative(Utils *utils) {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    int rows = 1e3;
+    int radius = (int)(rows/4);
+    int bx = (int)(rows/2), by = (int)(rows/2) - (int)(radius/2);
+    int gx =(int)(rows/2) - radius/2;
+    int gy =(int)(rows/2) + radius/2;
+    int rx =(int)(rows/2) + radius/2;
+    int ry =(int)(rows/2) + radius/2;
+    Mat img;
+    std::vector<Mat> bgr;
+    bgr.push_back(utils->createWhiteDisk(rows, rows, bx, by, radius));
+    bgr.push_back(utils->createWhiteDisk(rows, rows, gx, gy, radius));
+    bgr.push_back(utils->createWhiteDisk(rows, rows, rx, ry, radius));
+    merge(bgr, img);
+    img = utils->scaleImage2_uchar(img);
+    img = Scalar(255, 255, 255) - img;
+    imshow("img", img);
+    for (;;)
+        if ((char)waitKey(1) == 'q') break;
+
+    return 0;
+}
+
+int BlurColor() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+    int wsize = 1;
+
+    createTrackbar("wsize", "img2", &wsize, 50, 0, 0);
+
+    for (;;) {
+        blur(img, img2, Size(wsize + 1, wsize + 1), Point(-1, -1), BORDER_DEFAULT);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int LaplacianColor() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+    int wsize = 1;
+
+    createTrackbar("wsize", "img2", &wsize, 10, 0, 0);
+
+    for (;;) {
+        Laplacian(img, img2, CV_16S, 2*wsize+1, 1, 0, BORDER_DEFAULT);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int meanShiftFilter() {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/baboon.png", IMREAD_COLOR);
+    Mat img2;
+
+    int sp = 10;
+    int sr = 100;
+    int maxLevel = 1;
+    TermCriteria criteria = TermCriteria(TermCriteria::MAX_ITER + TermCriteria::EPS, 5, 1);
+
+    createTrackbar("maxLevel", "img2", &maxLevel, 5, 0, 0);
+    createTrackbar("sr", "img2", &sr, 200, 0, 0);
+    createTrackbar("sp", "img2", &sp, 20, 0, 0);
+
+    for (;;) {
+        pyrMeanShiftFiltering(img, img2, sp, sr, maxLevel, criteria);
+        imshow("img", img);
+        imshow("img2", img2);
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int LaplacianConvertScaleAbs(Utils *utils) {
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/wirebond.tif", IMREAD_GRAYSCALE);
+    Mat img2;
+
+    Laplacian(img, img2, CV_32F, 1, 1, 0);
+    convertScaleAbs(img2, img2);
+
+    imshow("img", utils->scaleImage2_uchar(img2));
+
+    for (;;) {
+
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+int SobelConvertScaleAbs(Utils *utils) {
+    namedWindow("img", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/building.tif", IMREAD_GRAYSCALE);
+    Mat img2, gx, gy, abs_gx, abs_gy;
+
+    Sobel(img, gx, CV_32F, 1, 0, 3);
+    Sobel(img, gy, CV_32F, 0, 1, 3);
+    convertScaleAbs(gx, abs_gx);
+    convertScaleAbs(gy, abs_gy);
+    img2 = abs_gx + abs_gy;
+
+    for (;;) {
+        imshow("img", utils->scaleImage2_uchar(img));
+        imshow("gx", utils->scaleImage2_uchar(abs_gx));
+        imshow("gy", utils->scaleImage2_uchar(abs_gy));
+        imshow("img2", utils->scaleImage2_uchar(img2));
+        if ((char)waitKey(1) == 'q') break;
     }
 
     return 0;

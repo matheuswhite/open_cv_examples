@@ -33,7 +33,9 @@ LIBS += -L/usr/local/lib \
 
 SOURCES += \
     main.cpp \
-    examples.cpp
+    examples.cpp \
+    utils.cpp
 
 HEADERS += \
-    examples.h
+    common.h \
+    utils.h

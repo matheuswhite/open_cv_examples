@@ -36,7 +36,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = open_cv_examples1.0.0
-DISTDIR = /home/alunoic/mwhite/open_cv_examples/.tmp/open_cv_examples1.0.0
+DISTDIR = /home/matheustenorio/Documentos/dev/UFAL/PDI/open_cv_examples/.tmp/open_cv_examples1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt5.9.0/5.9/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_videoio -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_flann -L/opt/Qt5.9.0/5.9/gcc_64/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -52,9 +52,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		examples.cpp 
+		examples.cpp \
+		utils.cpp 
 OBJECTS       = main.o \
-		examples.o
+		examples.o \
+		utils.o
 DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/linux.conf \
@@ -234,8 +236,10 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/exceptions.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/lex.prf \
-		open_cv_examples.pro examples.h main.cpp \
-		examples.cpp
+		open_cv_examples.pro common.h \
+		utils.h main.cpp \
+		examples.cpp \
+		utils.cpp
 QMAKE_TARGET  = open_cv_examples
 DESTDIR       = 
 TARGET        = open_cv_examples
@@ -629,8 +633,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents examples.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp examples.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents common.h utils.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp examples.cpp utils.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -678,11 +682,17 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-main.o: main.cpp examples.h
+main.o: main.cpp utils.h \
+		common.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-examples.o: examples.cpp examples.h
+examples.o: examples.cpp utils.h \
+		common.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o examples.o examples.cpp
+
+utils.o: utils.cpp utils.h \
+		common.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utils.o utils.cpp
 
 ####### Install
 

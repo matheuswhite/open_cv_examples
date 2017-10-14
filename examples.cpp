@@ -1322,3 +1322,108 @@ int SobelConvertScaleAbs(Utils *utils) {
 
     return 0;
 }
+
+int removeBrightnessOnTheCalculator(Utils *utils)
+{
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+    namedWindow("img3", WINDOW_KEEPRATIO);
+    namedWindow("final", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/calculator.tif", IMREAD_GRAYSCALE);
+    Mat img2, img3, img4;
+    int times = 70, times2 = 55, times3 = 30;
+
+    createTrackbar("times", "img2", &times, 100);
+    createTrackbar("times", "img3", &times2, 100);
+    createTrackbar("times", "final", &times3, 100);
+
+    Mat element, element2, element3, element4;
+
+    for (;;) {
+        element = getStructuringElement(MORPH_RECT, Size( 71, 1));
+        element2 = getStructuringElement(MORPH_RECT, Size( 11, 1));
+        element3 = getStructuringElement(MORPH_RECT, Size(3, 3));
+        element4 = getStructuringElement(MORPH_RECT, Size(21, 1));
+
+        //removing brightness
+        img2 = utils->OpeningByReconstruction(img, element, element3, times);
+        img3 = img - img2;
+        //reconstructing the vertical structs
+        img4 = utils->OpeningByReconstruction(img3, element2, element3, times2);
+        morphologyEx(img4, img4, MORPH_DILATE, element4);
+        img4 = min(img3, img4);
+        //final reconstruction
+        for (int i = 0; i < times3; ++i) {
+            morphologyEx(img4, img4, MORPH_DILATE, element3);
+            img4 = min(img4, img3);
+        }
+
+        imshow("img", img);
+        imshow("img2", img2);
+        imshow("img3", img3);
+        imshow("final", img4);
+
+        if ((char)waitKey(1) == 'q') break;
+    }
+
+    return 0;
+}
+
+void HoughTransformation() {
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/building.tif", IMREAD_GRAYSCALE);
+    Mat img2, img3;
+
+    Canny(img, img2, 50, 200, 3);
+    cvtColor(img2, img3, CV_GRAY2BGR);
+
+    vector<Vec4i> lines;
+    HoughLinesP(img2, lines, 1, CV_PI/180, 50, 50, 10);
+    for( size_t i = 0; i < lines.size(); i++ )
+    {
+        Vec4i l = lines[i];
+        line( img3, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, CV_AA);
+    }
+
+    imshow("img", img);
+    imshow("img2", img3);
+
+    for(;;)
+        if ((char)waitKey(5) == 'q') break;
+
+    return;
+}
+
+int equalizeHistRGB(Utils *utils) {
+
+    namedWindow("img", WINDOW_KEEPRATIO);
+    namedWindow("img2", WINDOW_KEEPRATIO);
+
+    Mat img = imread("img/lena.png", IMREAD_COLOR);
+    Mat img2;
+    Mat hsv[3];
+    int offset = 0;
+
+    createTrackbar("offset", "img2", &offset, 127, 0);
+
+    for(;;) {
+        cvtColor(img, img2, CV_BGR2HSV);
+
+        split(img2, hsv);
+        equalizeHist(hsv[2], hsv[2]);
+        hsv[2] += offset;
+        merge(hsv, 3, img2);
+
+        cvtColor(img2, img2, CV_HSV2BGR);
+
+        imshow("img", img);
+        imshow("img2", img2);
+
+        if ((char)waitKey(5) == 'q') break;
+    }
+
+    return 0;
+}

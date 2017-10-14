@@ -162,3 +162,17 @@ Mat Utils::cvtImg2Colormap(const Mat &src, int colormap) {
     applyColorMap(output, output, colormap);
     return output;
 }
+
+Mat Utils::OpeningByReconstruction(Mat mask, Mat kernel1, Mat kernel2, int k) {
+    //erosion by kernel
+    Mat marker = mask.clone();
+    morphologyEx(marker, marker, MORPH_ERODE, kernel1);
+
+    //dilatation k times by kernel, with min original img
+    for (int i = 0; i < k; ++i) {
+        morphologyEx(marker, marker, MORPH_DILATE, kernel2);
+        marker = min(marker, mask);
+    }
+
+    return marker;
+}

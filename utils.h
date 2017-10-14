@@ -14,6 +14,7 @@ public:
     Mat createWhiteDisk(const int &rows, const int &cols, const int &cx, const int &cy, const int &radius);
     Mat fftshift(const Mat &src);
     Mat cvtImg2Colormap(const Mat &src, int colormap);
+    Mat OpeningByReconstruction(Mat mask, Mat kernel1, Mat kernel2, int k);
 };
 
 #endif // UTILS_H

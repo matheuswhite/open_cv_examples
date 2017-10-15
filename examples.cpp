@@ -1427,3 +1427,22 @@ int equalizeHistRGB(Utils *utils) {
 
     return 0;
 }
+
+/*
+ * (+) Dilatation
+ * (-) Erosion
+ * o Opening
+ * * CLosing
+ * # Hit-or-miss
+ *
+ * boundary             = A - (A (-) B)
+ * hole filling         Xk = (Xk-1 (+) B) & ~A
+ * connected components Xk = (Xk-1 (+) B) & ~A
+ * convex hull Xi,k = (Xi,k-1 # Bi) | A
+ *             Xi,0 = A
+ * Thinning   = A & ~(A # B)
+ * Thickening = A |  (A # B)
+ * Skeletons
+ *  for (0, K)
+ *      s |= (A (-) kB) - (A (-) kB) o B
+ *
